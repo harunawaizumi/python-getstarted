@@ -10,4 +10,16 @@ def index(request):
 	pf_data = pd.DataFrame()
 	for a in assets:
 		pf_data[a] = wb.DataReader(a, data_source = 'yahoo', start = '2010-1-1')['Adj Close']
-	return HttpResponse("this is price page")
+
+	args = {}
+	args['pf_data'] = pf_data
+	args['stock'] = 'PG'
+
+	df_marks = pd.DataFrame({'name': ['Somu', 'Kiku', 'Amol', 'Lini'],
+     'physics': [68, 74, 77, 78],
+     'chemistry': [84, 56, 73, 69],
+     'algebra': [78, 88, 82, 87]})
+
+	# render dataframe as html
+	args['html'] = df_marks
+	return render(request, 'stock/price.html', args)
